@@ -46,6 +46,7 @@ node generate_witness.js multiplier2.wasm input.json witness.wtns
 snarkjs powersoftau new bn128 6 pot12_0000.ptau -v
 snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name="First contribution" -v -e="some text"
 snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v
+snarkjs powersoftau verify pot12_final.ptau
 
 # phase 2
 snarkjs groth16 setup ../multiplier2.r1cs pot12_final.ptau multiplier2_0000.zkey
