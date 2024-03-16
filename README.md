@@ -43,7 +43,7 @@ EOF
 node generate_witness.js multiplier2.wasm input.json witness.wtns
 
 # generate powersoftau
-snarkjs powersoftau new bn128 12 pot12_0000.ptau -v
+snarkjs powersoftau new bn128 6 pot12_0000.ptau -v
 snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name="First contribution" -v -e="some text"
 snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v
 
