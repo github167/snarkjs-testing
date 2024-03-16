@@ -69,7 +69,56 @@ snarkjs zkey export solidityverifier multiplier2_0001.zkey verifier.sol
 snarkjs generatecall
 
 ```
- 
-2. ZkREPL
+2. test with index.js
+```
+mkdir js && cd js
+npm init -y
+npm install snarkjs
+
+# copy the necessary resources
+cp ../multiplier2.wasm .
+cp ../multiplier2_0001.zkey .
+snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
+
+cat << "EOF" > index.js
+const snarkjs = require("snarkjs");
+const fs = require("fs");
+
+async function run() {
+    const p1 = await snarkjs.groth16.fullProve({a: 2, b: 17}, "multiplier2.wasm", "multiplier2_0001.zkey");
+
+    const p2 = await snarkjs.groth16.fullProve({a: 3, b: 19}, "multiplier2.wasm", "multiplier2_0001.zkey");
+
+    const p3 = await snarkjs.groth16.fullProve({a: 1, b: 34}, "multiplier2.wasm", "multiplier2_0001.zkey");
+
+    //console.log("Proof: ");
+    //console.log(JSON.stringify(proof, null, 1));
+
+    const vKey = JSON.parse(fs.readFileSync("verification_key.json"));
+
+    publicSignals = ['34'];
+	
+	// valid proof 2x17
+    res = await snarkjs.groth16.verify(vKey, publicSignals, p1.proof);
+    console.log("Factorization: 2x17==34: ", res);
+
+	// invalid proof 3x19
+    res = await snarkjs.groth16.verify(vKey, publicSignals, p2.proof);
+    console.log("Factorization: 3x19==34: ", res);
+
+	// invalid proof 1x34
+    res = await snarkjs.groth16.verify(vKey, publicSignals, p3.proof);
+    console.log("Factorization: 1x34==34: ", res);
+}
+
+run().then(() => {
+    process.exit(0);
+});
+EOF
+
+node index.js
+
+```
+3. ZkREPL
 https://zkrepl.dev/
 
