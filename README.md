@@ -51,6 +51,7 @@ snarkjs powersoftau verify pot12_final.ptau
 # phase 2
 snarkjs groth16 setup ../multiplier2.r1cs pot12_final.ptau multiplier2_0000.zkey
 snarkjs zkey contribute multiplier2_0000.zkey multiplier2_0001.zkey --name="1st Contributor Name" -v -e="some text"
+snarkjs zkey verify ../multiplier2.r1cs pot12_final.ptau multiplier2_0001.zkey
 
 # setup keys
 snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
