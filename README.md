@@ -58,6 +58,10 @@ snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
 snarkjs groth16 prove multiplier2_0001.zkey witness.wtns proof.json public.json
 snarkjs groth16 verify verification_key.json public.json proof.json
 
+# generate fullprove and verify
+snarkjs groth16 fullprove input.json circuit.wasm circuit_final.zkey proof.json public.json
+snarkjs groth16 verify verification_key.json public.json proof.json
+
 # generate sol
 snarkjs zkey export solidityverifier multiplier2_0001.zkey verifier.sol
 snarkjs generatecall
