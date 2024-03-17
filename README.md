@@ -83,13 +83,15 @@ snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
 const fs = require("fs");
+const WASM = "multiplier2.wasm";
+const ZKEY = "multiplier2_0001.zkey";
 
 async function run() {
-    const p1 = await snarkjs.groth16.fullProve({a: 2, b: 17}, "multiplier2.wasm", "multiplier2_0001.zkey");
+    const p1 = await snarkjs.groth16.fullProve({a: 2, b: 17}, WASM, ZKEY);
 
-    const p2 = await snarkjs.groth16.fullProve({a: 3, b: 19}, "multiplier2.wasm", "multiplier2_0001.zkey");
+    const p2 = await snarkjs.groth16.fullProve({a: 3, b: 19}, WASM, ZKEY);
 
-    const p3 = await snarkjs.groth16.fullProve({a: 1, b: 34}, "multiplier2.wasm", "multiplier2_0001.zkey");
+    const p3 = await snarkjs.groth16.fullProve({a: 1, b: 34}, WASM, ZKEY);
 
     //console.log("Proof: ");
     //console.log(JSON.stringify(proof, null, 1));
