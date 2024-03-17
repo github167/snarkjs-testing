@@ -134,9 +134,9 @@ cat << EOF > index.html
 <body>
 
   <h1>Snarkjs client example</h1>
-  <button id="bGenProof1"> Create proof(2x17==34) </button>
-  <button id="bGenProof2"> Create proof(2x19==34) </button>
-  <button id="bGenProof3"> Create proof(1x34==34) </button>
+  <button id="bGenProof1"> Create proof(3x11==33) </button>
+  <button id="bGenProof2"> Create proof(3x11==37) </button>
+  <button id="bGenProof3"> Create proof(1x33==33) </button>
 
   <!-- JS-generated output will be added here. -->
   <pre class="proof"> Proof: <code id="proof"></code></pre>
