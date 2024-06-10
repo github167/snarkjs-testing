@@ -128,7 +128,7 @@ node index.js
 
 ```
 
-test with html (doesn't work)
+test with html
 ```
 cp node_modules/snarkjs/build/snarkjs.min.js .
 
