@@ -3,7 +3,7 @@ Playground:
 - https://www.katacoda.com/scenario-examples/courses/environment-usages/nodejs
 - https://codedamn.com/online-compiler/node#start
 
-1. run the following script
+1. install cargo-circom
 ```
 # install circom
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf > install_cargo.sh
@@ -15,10 +15,20 @@ cd circom
 
 cargo build --release
 cargo install --path circom
+alias circom2='circom'
 
-# generate wasm
+```
+or install circom2
+```
+# install circom and snarkjs
+npm install -g circom2
 npm install -g snarkjs
 
+```
+
+2. test with command line
+```
+# generate wasm
 cat << EOF > multiplier2.circom
 pragma circom 2.0.0;
 
@@ -32,7 +42,7 @@ template Multiplier2() {
 component main = Multiplier2();
 EOF
 
-circom multiplier2.circom --r1cs --wasm --sym --c
+circom2 multiplier2.circom --r1cs --wasm --sym --c
 
 # generate wtns
 cd multiplier2_js
