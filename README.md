@@ -84,7 +84,7 @@ npm install snarkjs
 # copy the necessary resources
 cp ../multiplier2.wasm .
 cp ../multiplier2_0001.zkey .
-snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
+snarkjs zkey export verificationkey circuit_final.zkey verification_key.json
 
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
@@ -93,11 +93,11 @@ const WASM = "multiplier2.wasm";
 const ZKEY = "multiplier2_0001.zkey";
 
 async function run() {
-    const p1 = await snarkjs.groth16.fullProve({a: 2, b: 17}, WASM, ZKEY);
+    const p1 = await snarkjs.plonk.fullProve({a: 2, b: 17}, WASM, ZKEY);
 
-    const p2 = await snarkjs.groth16.fullProve({a: 3, b: 19}, WASM, ZKEY);
+    const p2 = await snarkjs.plonk.fullProve({a: 3, b: 19}, WASM, ZKEY);
 
-    const p3 = await snarkjs.groth16.fullProve({a: 1, b: 34}, WASM, ZKEY);
+    const p3 = await snarkjs.plonk.fullProve({a: 1, b: 34}, WASM, ZKEY);
 
     //console.log("Proof: ");
     //console.log(JSON.stringify(proof, null, 1));
@@ -107,15 +107,15 @@ async function run() {
     publicSignals = ['34'];
 	
 	// valid proof 2x17
-    res = await snarkjs.groth16.verify(vKey, publicSignals, p1.proof);
+    res = await snarkjs.plonk.verify(vKey, publicSignals, p1.proof);
     console.log("Factorization: 2x17==34: ", res);
 
 	// invalid proof 3x19
-    res = await snarkjs.groth16.verify(vKey, publicSignals, p2.proof);
+    res = await snarkjs.plonk.verify(vKey, publicSignals, p2.proof);
     console.log("Factorization: 3x19==34: ", res);
 
 	// invalid proof 1x34
-    res = await snarkjs.groth16.verify(vKey, publicSignals, p3.proof);
+    res = await snarkjs.plonk.verify(vKey, publicSignals, p3.proof);
     console.log("Factorization: 1x34==34: ", res);
 }
 
