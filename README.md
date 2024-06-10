@@ -3,7 +3,7 @@ Playground:
 - https://www.katacoda.com/scenario-examples/courses/environment-usages/nodejs
 - https://codedamn.com/online-compiler/node#start
 
-1. run the following script
+1. install cargo-circom
 ```
 # install circom
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf > install_cargo.sh
@@ -18,7 +18,7 @@ cargo install --path circom
 alias circom2='circom'
 
 ```
-or install 
+or install circom2
 ```
 # install circom and snarkjs
 npm install -g circom2
