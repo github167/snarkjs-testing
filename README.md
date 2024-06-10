@@ -16,6 +16,16 @@ cd circom
 cargo build --release
 cargo install --path circom
 
+```
+or install 
+```
+# install circom and snarkjs
+npm install -g circom2
+alias circom='circom2'
+
+```
+2. test with command line
+```
 # generate wasm
 npm install -g snarkjs
 
