@@ -171,7 +171,7 @@ function proveSecond33() {calculateProof(1, 33, 33);}
 async function calculateProof(w1, w2, numToFactorize) {
     proofCompnent.innerHTML = "Processing...";
     resultComponent.innerHTML = "";
-    const p1 = await snarkjs.plonk.fullProve( { a: w1, b: w2}, "multiplier2.wasm", "multiplier2_0001.zkey");
+    const p1 = await snarkjs.plonk.fullProve( { a: w1, b: w2}, "multiplier2.wasm", "circuit_final.zkey");
 
     //proofCompnent.innerHTML = JSON.stringify(p1.proof, null, 1);
     //proofCompnent.innerHTML = JSON.stringify(p1.publicSignals, null, 1);
