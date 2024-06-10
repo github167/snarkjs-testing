@@ -83,14 +83,14 @@ npm install snarkjs
 
 # copy the necessary resources
 cp ../multiplier2.wasm .
-cp ../multiplier2_0001.zkey .
+cp ../circuit_final.zkey .
 snarkjs zkey export verificationkey circuit_final.zkey verification_key.json
 
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
 const fs = require("fs");
 const WASM = "multiplier2.wasm";
-const ZKEY = "multiplier2_0001.zkey";
+const ZKEY = "circuit_final.zkey";
 
 async function run() {
     const p1 = await snarkjs.plonk.fullProve({a: 2, b: 17}, WASM, ZKEY);
