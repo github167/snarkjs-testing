@@ -128,7 +128,7 @@ node index.js
 
 ```
 
-test with html
+4. test with html
 ```
 cp node_modules/snarkjs/build/snarkjs.min.js .
 
@@ -200,5 +200,3 @@ npx http-server
 
 ```
 
-2. ZkREPL
-https://zkrepl.dev/
