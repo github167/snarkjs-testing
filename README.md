@@ -142,7 +142,7 @@ cat << EOF > index.html
 </head>
 <body>
 
-  <h1>Snarkjs client example</h1>
+  <h1>Snarkjs client example (Groth16)</h1>
   <button id="bGenProof1"> Create proof(3x11==33) </button>
   <button id="bGenProof2"> Create proof(3x11==37) </button>
   <button id="bGenProof3"> Create proof(1x33==33) </button>
