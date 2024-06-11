@@ -59,16 +59,16 @@ snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v
 
 # setup keys
 snarkjs plonk setup ../multiplier2.r1cs pot12_final.ptau circuit_final.zkey
-snarkjs zkey export verificationkey circuit_final.zkey verification_key.json
+snarkjs zkey export verificationkey circuit_final.zkey verification_plonk_key.json
 
 # generate prove and verify
 snarkjs plonk prove circuit_final.zkey witness.wtns proof.json public.json
-snarkjs plonk verify verification_key.json public.json proof.json
+snarkjs plonk verify verification_plonk_key.json public.json proof.json
 
 # fullprove
 rm -f public.json proof.json
 snarkjs plonk fullprove input.json multiplier2.wasm circuit_final.zkey proof.json public.json
-snarkjs plonk verify verification_key.json public.json proof.json
+snarkjs plonk verify verification_plonk_key.json public.json proof.json
 
 snarkjs zkey export solidityverifier circuit_final.zkey verifier.sol
 snarkjs generatecall
@@ -84,7 +84,7 @@ npm install snarkjs
 # copy the necessary resources
 cp ../multiplier2.wasm .
 cp ../circuit_final.zkey .
-snarkjs zkey export verificationkey circuit_final.zkey verification_key.json
+snarkjs zkey export verificationkey circuit_final.zkey verification_plonk_key.json
 
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
@@ -102,7 +102,7 @@ async function run() {
     //console.log("Proof: ");
     //console.log(JSON.stringify(proof, null, 1));
 
-    const vKey = JSON.parse(fs.readFileSync("verification_key.json"));
+    const vKey = JSON.parse(fs.readFileSync("verification_plonk_key.json"));
 
     publicSignals = ['34'];
 	
@@ -182,7 +182,7 @@ async function calculateProof(w1, w2, numToFactorize) {
     
     //proofCompnent.innerHTML = JSON.stringify(publicSignals, null, 1);    
     
-    const vkey = await fetch("verification_key.json").then( function(res) {
+    const vkey = await fetch("verification_plonk_key.json").then( function(res) {
         return res.json();
     });
 
