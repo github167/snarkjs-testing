@@ -58,19 +58,19 @@ snarkjs powersoftau contribute pot12_0000.ptau pot12_0001.ptau --name="First con
 snarkjs powersoftau prepare phase2 pot12_0001.ptau pot12_final.ptau -v
 
 # setup keys
-snarkjs plonk setup ../multiplier2.r1cs pot12_final.ptau circuit_final.zkey
-snarkjs zkey export verificationkey circuit_final.zkey verification_plonk_key.json
+snarkjs plonk setup ../multiplier2.r1cs pot12_final.ptau circuit_plonk_final.zkey
+snarkjs zkey export verificationkey circuit_plonk_final.zkey verification_plonk_key.json
 
 # generate prove and verify
-snarkjs plonk prove circuit_final.zkey witness.wtns proof.json public.json
+snarkjs plonk prove circuit_plonk_final.zkey witness.wtns proof.json public.json
 snarkjs plonk verify verification_plonk_key.json public.json proof.json
 
 # fullprove
 rm -f public.json proof.json
-snarkjs plonk fullprove input.json multiplier2.wasm circuit_final.zkey proof.json public.json
+snarkjs plonk fullprove input.json multiplier2.wasm circuit_plonk_final.zkey proof.json public.json
 snarkjs plonk verify verification_plonk_key.json public.json proof.json
 
-snarkjs zkey export solidityverifier circuit_final.zkey verifier.sol
+snarkjs zkey export solidityverifier circuit_plonk_final.zkey verifier.sol
 snarkjs generatecall
 
 ```
@@ -83,14 +83,14 @@ npm install snarkjs
 
 # copy the necessary resources
 cp ../multiplier2.wasm .
-cp ../circuit_final.zkey .
-snarkjs zkey export verificationkey circuit_final.zkey verification_plonk_key.json
+cp ../circuit_plonk_final.zkey .
+snarkjs zkey export verificationkey circuit_plonk_final.zkey verification_plonk_key.json
 
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
 const fs = require("fs");
 const WASM = "multiplier2.wasm";
-const ZKEY = "circuit_final.zkey";
+const ZKEY = "circuit_plonk_final.zkey";
 
 async function run() {
     const p1 = await snarkjs.plonk.fullProve({a: 2, b: 17}, WASM, ZKEY);
@@ -171,7 +171,7 @@ function proveSecond33() {calculateProof(1, 33, 33);}
 async function calculateProof(w1, w2, numToFactorize) {
     proofCompnent.innerHTML = "Processing...";
     resultComponent.innerHTML = "";
-    const p1 = await snarkjs.plonk.fullProve( { a: w1, b: w2}, "multiplier2.wasm", "circuit_final.zkey");
+    const p1 = await snarkjs.plonk.fullProve( { a: w1, b: w2}, "multiplier2.wasm", "circuit_plonk_final.zkey");
 
     //proofCompnent.innerHTML = JSON.stringify(p1.proof, null, 1);
     //proofCompnent.innerHTML = JSON.stringify(p1.publicSignals, null, 1);
