@@ -63,22 +63,22 @@ snarkjs zkey contribute multiplier2_0000.zkey multiplier2_0001.zkey --name="1st 
 snarkjs zkey verify ../multiplier2.r1cs pot12_final.ptau multiplier2_0001.zkey
 
 # setup keys
-snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
+snarkjs zkey export verificationkey multiplier2_0001.zkey verification_groth16_key.json
 
 # generate prove and verify
 snarkjs groth16 prove multiplier2_0001.zkey witness.wtns proof.json public.json
-snarkjs groth16 verify verification_key.json public.json proof.json
+snarkjs groth16 verify verification_groth16_key.json public.json proof.json
 
 # generate fullprove and verify
 snarkjs groth16 fullprove input.json multiplier2.wasm multiplier2_0001.zkey proof.json public.json
-snarkjs groth16 verify verification_key.json public.json proof.json
+snarkjs groth16 verify verification_groth16_key.json public.json proof.json
 
 # generate sol
 snarkjs zkey export solidityverifier multiplier2_0001.zkey verifier.sol
 snarkjs generatecall
 
 ```
-2. test with index.js
+3. test with index.js
 ```
 mkdir js && cd js
 npm init -y
@@ -87,7 +87,7 @@ npm install snarkjs
 # copy the necessary resources
 cp ../multiplier2.wasm .
 cp ../multiplier2_0001.zkey .
-snarkjs zkey export verificationkey multiplier2_0001.zkey verification_key.json
+snarkjs zkey export verificationkey multiplier2_0001.zkey verification_groth16_key.json
 
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
@@ -105,7 +105,7 @@ async function run() {
     //console.log("Proof: ");
     //console.log(JSON.stringify(proof, null, 1));
 
-    const vKey = JSON.parse(fs.readFileSync("verification_key.json"));
+    const vKey = JSON.parse(fs.readFileSync("verification_groth16_key.json"));
 
     publicSignals = ['34'];
 	
@@ -130,7 +130,7 @@ EOF
 node index.js
 
 ```
-3. test with html
+4. test with html
 ```
 cp node_modules/snarkjs/build/snarkjs.min.js .
 
@@ -184,7 +184,7 @@ async function calculateProof(w1, w2, numToFactorize) {
     
     //proofCompnent.innerHTML = JSON.stringify(publicSignals, null, 1);    
     
-    const vkey = await fetch("verification_key.json").then( function(res) {
+    const vkey = await fetch("verification_groth16_key.json").then( function(res) {
         return res.json();
     });
 
@@ -201,6 +201,6 @@ EOF
 npx http-server
 
 ```
-4. ZkREPL
+
 https://zkrepl.dev/
 
