@@ -59,22 +59,22 @@ snarkjs powersoftau verify pot12_final.ptau
 
 # phase 2
 snarkjs groth16 setup ../multiplier2.r1cs pot12_final.ptau multiplier2_0000.zkey
-snarkjs zkey contribute multiplier2_0000.zkey multiplier2_0001.zkey --name="1st Contributor Name" -v -e="some text"
-snarkjs zkey verify ../multiplier2.r1cs pot12_final.ptau multiplier2_0001.zkey
+snarkjs zkey contribute multiplier2_0000.zkey circuit_groth_final.zkey --name="1st Contributor Name" -v -e="some text"
+snarkjs zkey verify ../multiplier2.r1cs pot12_final.ptau circuit_groth_final.zkey
 
 # setup keys
-snarkjs zkey export verificationkey multiplier2_0001.zkey verification_groth16_key.json
+snarkjs zkey export verificationkey circuit_groth_final.zkey verification_groth16_key.json
 
 # generate prove and verify
-snarkjs groth16 prove multiplier2_0001.zkey witness.wtns proof.json public.json
+snarkjs groth16 prove circuit_groth_final.zkey witness.wtns proof.json public.json
 snarkjs groth16 verify verification_groth16_key.json public.json proof.json
 
 # generate fullprove and verify
-snarkjs groth16 fullprove input.json multiplier2.wasm multiplier2_0001.zkey proof.json public.json
+snarkjs groth16 fullprove input.json multiplier2.wasm circuit_groth_final.zkey proof.json public.json
 snarkjs groth16 verify verification_groth16_key.json public.json proof.json
 
 # generate sol
-snarkjs zkey export solidityverifier multiplier2_0001.zkey verifier.sol
+snarkjs zkey export solidityverifier circuit_groth_final.zkey verifier.sol
 snarkjs generatecall
 
 ```
@@ -86,14 +86,14 @@ npm install snarkjs
 
 # copy the necessary resources
 cp ../multiplier2.wasm .
-cp ../multiplier2_0001.zkey .
-snarkjs zkey export verificationkey multiplier2_0001.zkey verification_groth16_key.json
+cp ../circuit_groth_final.zkey .
+snarkjs zkey export verificationkey circuit_groth_final.zkey verification_groth16_key.json
 
 cat << "EOF" > index.js
 const snarkjs = require("snarkjs");
 const fs = require("fs");
 const WASM = "multiplier2.wasm";
-const ZKEY = "multiplier2_0001.zkey";
+const ZKEY = "circuit_groth_final.zkey";
 
 async function run() {
     const p1 = await snarkjs.groth16.fullProve({a: 2, b: 17}, WASM, ZKEY);
@@ -173,7 +173,7 @@ function proveSecond33() {calculateProof(1, 33, 33);}
 async function calculateProof(w1, w2, numToFactorize) {
     proofCompnent.innerHTML = "Processing...";
     resultComponent.innerHTML = "";
-    const p1 = await snarkjs.groth16.fullProve( { a: w1, b: w2}, "multiplier2.wasm", "multiplier2_0001.zkey");
+    const p1 = await snarkjs.groth16.fullProve( { a: w1, b: w2}, "multiplier2.wasm", "circuit_groth_final.zkey");
 
     //proofCompnent.innerHTML = JSON.stringify(p1.proof, null, 1);
     //proofCompnent.innerHTML = JSON.stringify(p1.publicSignals, null, 1);
